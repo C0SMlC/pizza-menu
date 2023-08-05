@@ -88,7 +88,7 @@ function Menu() {
 
 function Pizza(props) {
   return (
-    <li className="pizza">
+    <li className="pizza" key={props.name}>
       <img src={props.photoName} alt={props.name} />
       <div>
         <h2>{props.name}</h2>
@@ -100,9 +100,23 @@ function Pizza(props) {
 }
 
 function Footer() {
+  const currentHour = new Date().getHours();
+  const openHour = 9;
+  const closeHour = 22;
+  const isOpen = currentHour >= openHour && currentHour <= closeHour;
+  console.log(currentHour, openHour, closeHour, isOpen);
   return (
     <footer className="footer">
-      <p>Copyright &copy; 2023</p>
+      {isOpen ? (
+        <div className="order">
+          <p>
+            We are open until {closeHour}:00! Come visit us or Order Online!
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>We are closed! We will opne at {openHour}:00</p>
+      )}
     </footer>
   );
 }
