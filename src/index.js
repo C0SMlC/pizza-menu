@@ -66,34 +66,48 @@ function Header() {
 }
 
 function Menu() {
+  const pizzaCount = pizzaData.length;
   return (
     <div className="menu">
       <h2>Our Menu</h2>
-
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => {
-          return (
-            <Pizza
-              name={pizza.name}
-              ingredients={pizza.ingredients}
-              price={pizza.price}
-              photoName={pizza.photoName}
-            />
-          );
-        })}
-      </ul>
+      {pizzaCount > 0 ? (
+        <>
+          <p>
+            Authenticate italian cuisine, 6 creative dishes to choose from. All
+            from our stone oven, All organic, All delicious!
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => {
+              return (
+                <Pizza
+                  name={pizza.name}
+                  ingredients={pizza.ingredients}
+                  price={pizza.price}
+                  photoName={pizza.photoName}
+                  soldOut={pizza.soldOut}
+                />
+              );
+            })}
+          </ul>
+        </>
+      ) : (
+        <p>No pizzas available</p>
+      )}
     </div>
   );
 }
 
 function Pizza(props) {
+  // if (props.soldOut) {
+  //   return null;
+  // }
   return (
-    <li className="pizza" key={props.name}>
+    <li className={`pizza ${props.soldOut && 'sold-out'}`} key={props.name}>
       <img src={props.photoName} alt={props.name} />
       <div>
         <h2>{props.name}</h2>
         <p>{props.ingredients}</p>
-        <span>${props.price}</span>
+        <span>{props.soldOut ? 'SOLD OUT' : '$' + props.price}</span>
       </div>
     </li>
   );
